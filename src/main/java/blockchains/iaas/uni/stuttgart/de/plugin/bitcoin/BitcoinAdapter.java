@@ -8,9 +8,12 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  *******************************************************************************/
+
 package blockchains.iaas.uni.stuttgart.de.plugin.bitcoin;
 
 import blockchains.iaas.uni.stuttgart.de.api.exceptions.*;
+import blockchains.iaas.uni.stuttgart.de.api.interfaces.BlockchainAdapter;
+import blockchains.iaas.uni.stuttgart.de.api.interfaces.FinalityConfidenceCalculator;
 import blockchains.iaas.uni.stuttgart.de.api.model.*;
 import blockchains.iaas.uni.stuttgart.de.api.utils.PoWConfidenceCalculator;
 import com.google.common.base.Strings;
@@ -33,15 +36,25 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class BitcoinAdapter extends AbstractAdapter {
+public class BitcoinAdapter implements BlockchainAdapter {
     private static final Logger log = LoggerFactory.getLogger(BitcoinAdapter.class);
     private BtcdClient client;
     private BtcdDaemon daemon;
+    protected FinalityConfidenceCalculator confidenceCalculator;
 
     public BitcoinAdapter(BtcdClient client,
                           BtcdDaemon daemon) {
         this.client = client;
         this.daemon = daemon;
+    }
+
+
+    public FinalityConfidenceCalculator getConfidenceCalculator() {
+        return confidenceCalculator;
+    }
+
+    public void setConfidenceCalculator(FinalityConfidenceCalculator confidenceCalculator) {
+        this.confidenceCalculator = confidenceCalculator;
     }
 
     /**

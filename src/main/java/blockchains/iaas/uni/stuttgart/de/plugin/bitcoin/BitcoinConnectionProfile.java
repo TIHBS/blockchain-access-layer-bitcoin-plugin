@@ -1,4 +1,4 @@
-package blockchains.iaas.uni.stuttgart.de.plugin.bitcoin; /*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2019 Institute for the Architecture of Application System - University of Stuttgart
  * Author: Ghareeb Falazi
  *
@@ -8,6 +8,8 @@ package blockchains.iaas.uni.stuttgart.de.plugin.bitcoin; /*********************
  *
  * SPDX-License-Identifier: Apache-2.0
  *******************************************************************************/
+
+package blockchains.iaas.uni.stuttgart.de.plugin.bitcoin;
 
 import blockchains.iaas.uni.stuttgart.de.api.connectionprofiles.AbstractConnectionProfile;
 
