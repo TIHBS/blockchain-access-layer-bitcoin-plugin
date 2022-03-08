@@ -11,7 +11,7 @@
 
 package blockchains.iaas.uni.stuttgart.de.plugin.bitcoin;
 
-import blockchains.iaas.uni.stuttgart.de.api.IAdapterExtenstion;
+import blockchains.iaas.uni.stuttgart.de.api.IAdapterExtension;
 import blockchains.iaas.uni.stuttgart.de.api.interfaces.BlockchainAdapter;
 import blockchains.iaas.uni.stuttgart.de.api.utils.PoWConfidenceCalculator;
 import com.neemre.btcdcli4j.core.BitcoindException;
@@ -52,10 +52,10 @@ public class BitcoinPlugin extends Plugin {
     }
 
     @Extension
-    public static class BitcoinPluginImpl implements IAdapterExtenstion {
+    public static class BitcoinPluginImpl implements IAdapterExtension {
 
         @Override
-        public BlockchainAdapter getAdapter(Map<String, String> parameters) {
+        public BlockchainAdapter getAdapter(Map<String, Object> parameters) {
             // TODO: Create blockchains.iaas.uni.stuttgart.demo.BitcoinConnectionProfile object from parameters
             BitcoinConnectionProfile gateway = new BitcoinConnectionProfile();
             final PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager();
