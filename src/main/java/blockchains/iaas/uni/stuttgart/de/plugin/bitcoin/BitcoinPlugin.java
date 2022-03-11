@@ -11,7 +11,8 @@
 
 package blockchains.iaas.uni.stuttgart.de.plugin.bitcoin;
 
-import blockchains.iaas.uni.stuttgart.de.api.IAdapterExtenstion;
+import blockchains.iaas.uni.stuttgart.de.api.IAdapterExtension;
+import blockchains.iaas.uni.stuttgart.de.api.connectionprofiles.AbstractConnectionProfile;
 import blockchains.iaas.uni.stuttgart.de.api.interfaces.BlockchainAdapter;
 import blockchains.iaas.uni.stuttgart.de.api.utils.PoWConfidenceCalculator;
 import com.neemre.btcdcli4j.core.BitcoindException;
@@ -52,12 +53,11 @@ public class BitcoinPlugin extends Plugin {
     }
 
     @Extension
-    public static class BitcoinPluginImpl implements IAdapterExtenstion {
+    public static class BitcoinPluginImpl implements IAdapterExtension {
 
         @Override
-        public BlockchainAdapter getAdapter(Map<String, String> parameters) {
-            // TODO: Create blockchains.iaas.uni.stuttgart.demo.BitcoinConnectionProfile object from parameters
-            BitcoinConnectionProfile gateway = new BitcoinConnectionProfile();
+        public BlockchainAdapter getAdapter(AbstractConnectionProfile abstractConnectionProfile) {
+            BitcoinConnectionProfile gateway = (BitcoinConnectionProfile) abstractConnectionProfile;
             final PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager();
             final CloseableHttpClient httpProvider = HttpClients.custom().setConnectionManager(connManager).build();
 
@@ -69,12 +69,21 @@ public class BitcoinPlugin extends Plugin {
                 cCalc.setAdversaryRatio(gateway.getAdversaryVotingRatio());
                 result.setConfidenceCalculator(cCalc);
                 return result;
-            } catch (BitcoindException e) {
-                e.printStackTrace();
-            } catch (CommunicationException e) {
+            } catch (BitcoindException | CommunicationException e) {
                 e.printStackTrace();
             }
             return null;
+        }
+
+
+        @Override
+        public Class<? extends AbstractConnectionProfile> getConnectionProfileClass() {
+            return BitcoinConnectionProfile.class;
+        }
+
+        @Override
+        public String getConnectionProfileNamedType() {
+            return "bitcoin";
         }
 
         @Override
